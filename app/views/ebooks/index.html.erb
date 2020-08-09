@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Ebooks</h1>
+
+  <div class="list-group">
+    <% @ebooks.each do |ebook| %>
+      <%= link_to ebook_path(ebook.slug), class: "list-group-item list-group-item-action" do %>
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><%= ebook.title %></h5>
+          <small><%= time_ago_in_words(ebook.created_at) %> ago</small>
+        </div>
+        <p class="mb-1"><%= truncate(ebook.urls, length: 100) %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
