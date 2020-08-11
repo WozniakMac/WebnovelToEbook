@@ -44,7 +44,7 @@ class EbooksController < ApplicationController
     GenerateEpubJob.perform_later(@ebook.id)
     @ebook.update(status: :in_progress)
 
-    redirect_to ebook_path(@ebook.slug), notice: "Ebook will be generated soon. Refresh page to see results."
+    redirect_to ebook_path(@ebook.slug), notice: "Ebook will be generated soon."
   end
 
   private

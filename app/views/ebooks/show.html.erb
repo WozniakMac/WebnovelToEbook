@@ -3,8 +3,11 @@
     <div class="mt-1 mb-1">
       <%= link_to 'Generate ebook', generate_ebook_path(@ebook.slug), method: :post, class: "btn btn-primary btn-lg btn-block" %>
     </div>
+  <% end %>
+
+  <% if @ebook.in_progress? %>
     <div class="alert alert-danger" role="alert">
-      Please check all details below
+      <h1>Refresh the page to check if ebook is generated</h1>
     </div>
   <% end %>
 
