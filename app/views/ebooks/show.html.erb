@@ -1,15 +1,20 @@
 <div class="container">
-  <div class="mt-1 mb-1">
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+  <% if @ebook.created? %>
+    <div class="mt-1 mb-1">
+      <%= link_to 'Generate ebook', generate_ebook_path(@ebook.slug), method: :post, class: "btn btn-primary btn-lg btn-block" %>
     </div>
-  </div>
-  <div class="mt-1 mb-1">
-    <button type="button" class="btn btn-primary btn-lg btn-block">Generate ebook</button>
-  </div>
-  <div class="alert alert-danger" role="alert">
-    Please check all details below
-  </div>
+    <div class="alert alert-danger" role="alert">
+      Please check all details below
+    </div>
+  <% end %>
+
+  <p>
+    <% if @ebook.epub_file.present? %>
+      <div class="mt-1 mb-1">
+        <%= link_to 'Download Epub', rails_blob_path(@ebook.epub_file, disposition: "attachment"), class: "btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
+  </p>
 
   <div class="d-flex justify-content-between">
     <h3>
@@ -18,7 +23,7 @@
     </h3>
 
     <% if @ebook.created? %>
-      <%= link_to 'Cancel', ebook_path, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Cancel', ebook_path(@ebook.slug), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
   </div>
 

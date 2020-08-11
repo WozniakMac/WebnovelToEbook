@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EbooksController < ApplicationController
-  before_action :set_ebook, only: [:show, :destroy]
+  before_action :set_ebook, only: [:show, :destroy, :generate]
 
   # GET /ebooks
   def index
@@ -23,7 +23,7 @@ class EbooksController < ApplicationController
     @ebook.slug = SecureRandom.uuid
 
     if @ebook.save
-      redirect_to ebook_path(@ebook.slug), notice: "Ebook was successfully created."
+      redirect_to ebook_path(@ebook.slug), notice: "Ebook data was successfully created."
     else
       render :new
     end
@@ -34,7 +34,17 @@ class EbooksController < ApplicationController
     return unless @ebook.created?
 
     @ebook.destroy
-    redirect_to ebooks_url, notice: "Ebook was successfully destroyed."
+    redirect_to ebooks_url, notice: "Ebook data was successfully destroyed."
+  end
+
+  # POST /ebooks/1/generate
+  def generate
+    return unless @ebook.created?
+
+    GenerateEpubJob.perform_later(@ebook.id)
+    @ebook.update(status: :in_progress)
+
+    redirect_to ebook_path(@ebook.slug), notice: "Ebook will be generated soon. Refresh page to see results."
   end
 
   private

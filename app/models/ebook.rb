@@ -26,6 +26,12 @@ class Ebook < ApplicationRecord
   validate :urls_limit
   validate :urls_format
 
+  has_one_attached :epub_file
+
+  def urls_array
+    urls.split("\n")
+  end
+
   private
 
   def clean_urls
