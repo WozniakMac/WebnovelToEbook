@@ -4,17 +4,18 @@
 #
 # Table name: ebooks
 #
-#  id         :bigint           not null, primary key
-#  progress   :integer
-#  slug       :string
-#  status     :integer          default("created"), not null
-#  title      :string
-#  urls       :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  progress    :integer
+#  slug        :string
+#  status      :integer          default("created"), not null
+#  title       :string
+#  urls        :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  webnovel_id :integer
 #
 class Ebook < ApplicationRecord
-  URLS_LIMIT = 20
+  URLS_LIMIT = 2000
 
   enum status: %i[created in_progress done]
 
@@ -27,6 +28,7 @@ class Ebook < ApplicationRecord
   validate :urls_format
 
   has_one_attached :epub_file
+  belongs_to :webnovel, optional: true
 
   def urls_array
     urls.split("\n")

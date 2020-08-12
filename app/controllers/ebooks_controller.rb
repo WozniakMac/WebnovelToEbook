@@ -14,7 +14,12 @@ class EbooksController < ApplicationController
 
   # GET /ebooks/new
   def new
-    @ebook = Ebook.new
+    if @webnovel_id.present?
+      webnovel = Webnovel.find(@webnovel_id)
+      @ebook = Ebook.new(title: webnovel.title, urls: webnovel.chapters.map(&:url).join("\n"))
+    else
+      @ebook = Ebook.new
+    end
   end
 
   # POST /ebooks
@@ -56,6 +61,6 @@ class EbooksController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def ebook_params
-    params.require(:ebook).permit(:title, :urls)
+    params.require(:ebook).permit(:title, :urls, :webnovel_id)
   end
 end

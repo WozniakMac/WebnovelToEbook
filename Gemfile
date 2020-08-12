@@ -15,10 +15,14 @@ gem "sanitize"
 gem "gepub"
 gem "rack-attack"
 gem "aws-sdk-s3"
+gem "final_redirect_url"
 gem "nokogiri"
 gem "simple_form"
+gem "acts_as_list"
 gem "turbolinks", "~> 5"
 gem "webpacker", "~> 4.0"
+gem "redis", ">= 4.0", require: ["redis", "redis/connection/hiredis"]
+gem "hiredis"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
@@ -44,3 +48,5 @@ group :test do
 end
 
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+
+gem "stimulus_reflex", "~> 3.2"
