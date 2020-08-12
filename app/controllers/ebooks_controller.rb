@@ -27,6 +27,14 @@ class EbooksController < ApplicationController
     @ebook = Ebook.new(ebook_params)
     @ebook.slug = SecureRandom.uuid
 
+    if @ebook.valid?
+      existing_ebook = Ebook.find_by(urls: @ebook.urls)
+
+      if existing_ebook.present?
+        return redirect_to ebook_path(existing_ebook.slug), notice: "Ebook already exist."
+      end
+    end
+
     if @ebook.save
       redirect_to ebook_path(@ebook.slug), notice: "Ebook data was successfully created."
     else
