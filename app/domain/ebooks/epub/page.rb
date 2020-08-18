@@ -50,6 +50,8 @@ module Ebooks
           "div#content"
         when /wuxiaworld.com/
           "div#chapter-outer"
+        when /chubbycheeksthoughts.com/
+          "div.entry-content"
         end
       end
     end
