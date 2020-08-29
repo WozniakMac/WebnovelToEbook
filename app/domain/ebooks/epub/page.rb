@@ -27,8 +27,18 @@ module Ebooks
 
       def sanitized_content
         Sanitize.fragment(
-          content.to_html, elements: %w[span strong p]
+          filtered_content.to_html, elements: %w[span strong p]
         )
+      end
+
+      def filtered_content
+        content_to_filter = content
+        content_to_filter.css("p").find_all.each do |p|
+          p.remove if p.content.blank?
+          p.remove if p.content.strip.empty?
+        end
+
+        content_to_filter
       end
 
       def header
@@ -52,6 +62,8 @@ module Ebooks
           "div#chapter-outer"
         when /chubbycheeksthoughts.com/
           "div.entry-content"
+        when /webnovelonline.com/
+          "div.chapter-content"
         end
       end
     end
