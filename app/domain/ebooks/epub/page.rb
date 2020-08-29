@@ -20,7 +20,7 @@ module Ebooks
           document.at_css(content_tag)
         else
           document.css("div").max_by do |element|
-            element.children.count { |child| child.name == "text" }
+            element.children.count { |child| child.name == "p" }
           end
         end
       end
